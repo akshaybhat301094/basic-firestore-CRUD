@@ -1,0 +1,31 @@
+<div class="container">
+  <div *ngIf="credentials?.length > 0; else noItems" class="pt-5">
+    <ul class="list-group text-center">
+      <li (dblclick)="deleteItem($event,item)" *ngFor="let item of credentials" class="list-group-item"> 
+        {{item.username}} <a href="#" class="secondary-content float-right">
+          <span (click)="editItem($event,item)">edit</span>
+          <span *ngIf="editState && itemToEdit.id == item.id" (click)="closeItem()" class="ml-3">X</span>
+        </a>
+        <div *ngIf="editState && itemToEdit.id == item.id">
+          <form (ngSubmit)="updateItem(item)" class="mt-5">
+              <div class="row">
+                  <div class="nput-field col-6">
+                    <input type="text" placeholder="Add Username" [(ngModel)]="item.username" name="username">
+                  </div>
+                  <div class="nput-field col-6">
+                      <input type="text" placeholder="Add Password" [(ngModel)]="item.password" name="password">
+                  </div>
+                  <input type="submit" value="Update-item" class="btn btn-primary mt-2 col-5 ml-auto mr-auto">
+                  <input type="submit" value="Delete-item" class="btn btn-danger mt-2 col-5 ml-auto mr-auto" (click)="deleteItem($event,item)">
+                </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noItems>
+    <hr>
+    <h5 class="text-center">There are no items to list</h5>
+  </ng-template>
+</div>
